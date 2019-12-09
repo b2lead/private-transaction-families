@@ -2,7 +2,7 @@
 ifeq ($(SGX_DEBUG), 1)
         COMMON_CFLAGS += -O0 -g -DDEBUG
 else
-        COMMON_CFLAGS += -O2 -D_FORTIFY_SOURCE=2
+        COMMON_CFLAGS += -O2 -D_FORTIFY_SOURCE=2 -DNDEBUG
 endif
 
 

@@ -27,7 +27,7 @@ ifeq ($(SGX_DEBUG), 1)
     SGX_COMMON_CFLAGS += -O0 -g -DDEBUG
     BIN_FOLDER := debug
 else
-    SGX_COMMON_CFLAGS += -O2 -D_FORTIFY_SOURCE=2
+    SGX_COMMON_CFLAGS += -O2 -D_FORTIFY_SOURCE=2 -DNDEBUG
     BIN_FOLDER := release
 endif
 
