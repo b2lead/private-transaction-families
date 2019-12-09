@@ -100,6 +100,7 @@ void PrivateApplicator::Apply()
     {
         std::string err_msg("sgx error code is: ");
         err_msg.append(std::to_string(ret_val)).append(", error message is: ").append(err);
+        contextPtr.reset();
         throw sawtooth::InvalidTransaction(err_msg);
     }
     PRINT(INFO, LISTENER, "PrivateApplicator::Apply completed\n");
