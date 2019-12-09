@@ -22,4 +22,5 @@ namespace business_logic
 {
     std::pair<bool, secure::string> execute_transaction(const secure::string &payload, const SignerPubKey &signerPubKey, const uint16_t &svn, const secure::string& nonce);
     bool bl_read(const StlAddress &addr, const SignerPubKey &key, secure::string &value, const uint16_t &svn);
+    bool is_update_svn_txn(const secure::string &payload);
 } // namespace business_logic

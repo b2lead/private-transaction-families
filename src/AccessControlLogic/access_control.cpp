@@ -192,7 +192,8 @@ bool update_svn(const uint16_t &new_svn, const uint16_t &txn_svn, const secure::
 {
 	// new suggested svn must bigger than txn svn (in this stage txn svn equals cached/ctx svn)
 	// if both svns are 0 it might be first txn ever, don't reject
-	if (!(new_svn == 0 && txn_svn == 0) && txn_svn >= new_svn)
+
+	if (txn_svn > new_svn)
 	{
 		PRINT(ERROR, ACL_LOG, "new svn must be bigger than existing svn\n");
 		return false;
@@ -210,7 +211,7 @@ bool update_svn(const uint16_t &new_svn, const uint16_t &txn_svn, const secure::
 	}
 
 	// reset acl
-	internalState.ClearAcl();
+	// internalState.ClearAcl();
 
 	// write back empty acl to merkle tree with new svn
 	return internalState.WriteAcl(new_svn, nonce);

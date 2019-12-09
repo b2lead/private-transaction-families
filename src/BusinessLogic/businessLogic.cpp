@@ -27,7 +27,11 @@
 #include "enclave_log.h"
 #include "secure_allocator.h"
 #include "json.hpp"
-
+bool is_update_svn_txn(const secure::string &payload)
+{
+    //todo: return true if is update svn -> it cause to allowed get svn is grater from ledger svn
+    return false;
+}
 // add secure string support to json parser
 namespace nlohmann
 {

@@ -282,12 +282,7 @@ sgx_status_t secure_apply(
         PRINT(ERROR, LISTENER, "failed to extract transaction svn\n");
         return SGX_ERROR_INVALID_PARAMETER;
     }
-    //validate svn
-    if (!validate_svn(txn_svn))
-    {
-        PRINT(ERROR, LISTENER, "transaction svn %" PRIu16 " is not valid\n", txn_svn);
-        return SGX_ERROR_INVALID_PARAMETER;
-    }
+    
     // is member will be also checked before read/write request but checked here save effort in case not a member
     if (!acl::acl_is_member(key, txn_svn, true))
     {
@@ -299,6 +294,17 @@ sgx_status_t secure_apply(
     auto status = decrypt_payload(data, decrypted_payload, txn_svn);
     if (status != SGX_SUCCESS)
         return status;
+
+    //validate svn
+    if (!validate_svn(txn_svn))
+    {
+        if(!business_logic::is_update_svn_txn(decrypted_payload))
+        {
+            PRINT(ERROR, LISTENER, "transaction svn %" PRIu16 " is not valid\n", txn_svn);
+            return SGX_ERROR_INVALID_PARAMETER;
+        }
+    }
+
     // execute logic
     auto res = business_logic::execute_transaction(decrypted_payload, key, txn_svn, nonce);
     if (!res.first)
