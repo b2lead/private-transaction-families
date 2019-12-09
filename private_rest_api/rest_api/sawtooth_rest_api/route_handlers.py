@@ -333,9 +333,13 @@ class RouteHandler:
         Response:
             data: The data stored at that address, encrypted back with the one time key for requester
         """
-
+        
         encrypted_request = request.match_info.get('encrypted_request', '')
-        # convert back from url safe base64 encoding to regular base64 encoding
+
+        if encrypted_request == '':
+            encrypted_request = await request.read()
+
+        #  convert back from url safe base64 encoding to regular base64 encoding
         try:
             enc_data_url = base64.urlsafe_b64decode(encrypted_request)
             encrypted_data = base64.b64encode(enc_data_url)

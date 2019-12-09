@@ -114,6 +114,8 @@ def start_rest_api(host, port, connection, private_tp_url, timeout, registry,
     app.router.add_get('/state', handler.list_state)
     app.router.add_get('/state/{address}', handler.fetch_state)
     app.router.add_get('/private_state/{encrypted_request}', handler.client_reader)
+    app.router.add_get('/private_state_b', handler.client_reader)
+
 
     app.router.add_get('/blocks', handler.list_blocks)
     app.router.add_get('/blocks/{block_id}', handler.fetch_block)
